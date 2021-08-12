@@ -48,8 +48,8 @@ stages:
             helm chart push $(acr.name).azurecr.io/$(acr.repo.name):latest
           displayName: push the chart to acr
 
-  - stage: cd
-    displayName: CD
+  - stage: dev
+    displayName: DEV
     dependsOn: ci
     jobs:
       - deployment: helm_publish_aks
@@ -87,10 +87,55 @@ stages:
                   azureSubscription: '$(azure.service.connection)'
                   azureResourceGroup: 'demos'
                   kubernetesCluster: 'aksdemoutkarsh'
-                  namespace: 'helmdemo'
+                  namespace: 'dev'
                   command: 'upgrade'
                   chartType: 'FilePath'
                   chartPath: '$(build.stagingdirectory)/azure-vote/'
                   releaseName: 'helmdemo'
                   arguments: '--create-namespace --install'
 
+  - stage: qa
+    displayName: QA
+    dependsOn: dev
+    jobs:
+      - deployment: helm_publish_aks
+        displayName: deploy to aks
+        environment: 
+          name: PROD
+          resourceName: helmdemo
+          resourceType: Kubernetes
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: HelmInstaller@0
+                displayName: install helm
+                inputs:
+                  helmVersion: 'latest'
+                  installKubectl: false
+
+              - script: |
+                  echo "$(acr.pull.password)" | helm registry login $(acr.name).azurecr.io --username $(acr.pull.username) --password-stdin
+                displayName: login to acr using helm
+
+              - bash: |
+                    helm chart pull $(acr.name).azurecr.io/$(acr.repo.name):latest
+                displayName: get helm chart on agent
+              
+              - bash: |
+                  helm chart export $(acr.name).azurecr.io/$(acr.repo.name):latest --destination $(build.stagingdirectory)
+                displayName: export the chart to folder
+              
+              - task: HelmDeploy@0
+                displayName: deploy chart to aks
+                inputs:
+                  connectionType: 'Azure Resource Manager'
+                  azureSubscription: '$(azure.service.connection)'
+                  azureResourceGroup: 'demos'
+                  kubernetesCluster: 'aksdemoutkarsh'
+                  namespace: 'qa'
+                  command: 'upgrade'
+                  chartType: 'FilePath'
+                  chartPath: '$(build.stagingdirectory)/azure-vote/'
+                  releaseName: 'helmdemo'
+                  arguments: '--create-namespace --install'
