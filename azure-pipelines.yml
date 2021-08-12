@@ -12,7 +12,7 @@ resources:
      endpoint: github
 
 variables:
-  acr.name: acrdemoutkarsh
+  acr.name: acrdemojala
   acr.repo.name: helmdemo/vote-app
   HELM_EXPERIMENTAL_OCI: 1
 
