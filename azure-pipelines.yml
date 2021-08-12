@@ -9,7 +9,7 @@ resources:
    - repository: helmrepo
      type: github
      name: luisj-rodriguez/azure-vote-helm-chart
-     endpoint: github
+     endpoint: luisj-rodriguez
 
 variables:
   acr.name: acrdemojala
