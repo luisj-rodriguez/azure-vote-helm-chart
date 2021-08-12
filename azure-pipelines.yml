@@ -8,7 +8,7 @@ resources:
  repositories:
    - repository: helmrepo
      type: github
-     name: utkarshpoc/azure-vote-helm-chart
+     name: luisf-rodriguez/azure-vote-helm-chart
      endpoint: github
 
 variables:
