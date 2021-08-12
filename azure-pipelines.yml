@@ -91,6 +91,7 @@ stages:
                   command: 'upgrade'
                   chartType: 'FilePath'
                   chartPath: '$(build.stagingdirectory)/azure-vote/'
+                  valueFile: '$(build.stagingdirectory)/azure-vote/values/dev-values.yaml'
                   releaseName: 'helmdemo'
                   arguments: '--create-namespace --install'
 
@@ -137,5 +138,6 @@ stages:
                   command: 'upgrade'
                   chartType: 'FilePath'
                   chartPath: '$(build.stagingdirectory)/azure-vote/'
+                  valueFile: '$(build.stagingdirectory)/azure-vote/values/qa-values.yaml'
                   releaseName: 'helmdemo'
                   arguments: '--create-namespace --install'
