@@ -36,6 +36,7 @@ stages:
             deploymentMode: 'Incremental'
   - stage: ci
     displayName: CI
+    dependsOn: infra
     jobs:
       - job: helm_publish_acr
         displayName: helm chart publish
