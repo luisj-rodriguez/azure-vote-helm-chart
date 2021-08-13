@@ -31,7 +31,6 @@ stages:
             action: 'Create Or Update Resource Group'
             resourceGroupName: 'demo'
             location: 'eastus'
-            templateLocation: 'Linked artifact'
             csmFile: '$(build.stagingdirectory)/azuredeploy.json'
             deploymentMode: 'Incremental'
   - stage: ci
