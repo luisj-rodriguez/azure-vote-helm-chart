@@ -32,7 +32,7 @@ stages:
             resourceGroupName: 'demo'
             location: 'eastus'
             templateLocation: 'Linked artifact'
-            csmFile: '$(Build.stagingdirectory)/azuredeploy.json'
+            csmFile: '$(build.stagingdirectory)/azuredeploy.json'
             deploymentMode: 'Incremental'
   - stage: ci
     displayName: CI
