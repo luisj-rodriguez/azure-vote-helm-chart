@@ -102,7 +102,7 @@ stages:
                 displayName: deploy chart to aks
                 inputs:
                   connectionType: 'Azure Resource Manager'
-                  azureSubscription: 'suscription'
+                  azureSubscription: 'azure'
                   azureResourceGroup: 'demos'
                   kubernetesCluster: 'aksdemoutkarsh'
                   namespace: 'dev'
@@ -149,7 +149,7 @@ stages:
                 displayName: deploy chart to aks
                 inputs:
                   connectionType: 'Azure Resource Manager'
-                  azureSubscription: 'suscription'
+                  azureSubscription: 'azure'
                   azureResourceGroup: 'demos'
                   kubernetesCluster: 'aksdemoutkarsh'
                   namespace: 'qa'
