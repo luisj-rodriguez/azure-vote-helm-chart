@@ -17,6 +17,23 @@ variables:
   HELM_EXPERIMENTAL_OCI: 1
 
 stages:
+  - stage: infra
+    displayName: INFRA
+    jobs:
+      - job: setup_aks
+        displayName: aks
+        steps:
+        - task: AzureResourceManagerTemplateDeployment@3
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: 'azure'
+            subscriptionId: '11d9346f-bca5-4c65-b575-e09b3b20151d'
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: 'demo'
+            location: 'eastus'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(Build.ArtifactStagingDirectory)/infra/azuredeploy.json'
+            deploymentMode: 'Incremental'
   - stage: ci
     displayName: CI
     jobs:
@@ -52,11 +69,11 @@ stages:
     displayName: DEV
     dependsOn: ci
     jobs:
-      - deployment: helm_publish_aks
-        displayName: deploy to aks
+      - deployment: helm_publish_aks_DEV
+        displayName: deploy to aks DEV
         environment: 
           name: demo
-          resourceName: dev
+          resourceName: default
           resourceType: Kubernetes
         strategy:
           runOnce:
@@ -103,7 +120,7 @@ stages:
         displayName: deploy to aks
         environment: 
           name: demo
-          resourceName: qa
+          resourceName: default
           resourceType: Kubernetes
         strategy:
           runOnce:
