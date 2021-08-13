@@ -23,6 +23,11 @@ stages:
       - job: setup_aks
         displayName: aks
         steps:
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: 'src/azure-vote-helm-chart/infra/'
+            Contents: '**'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
         - task: AzureResourceManagerTemplateDeployment@3
           inputs:
             deploymentScope: 'Resource Group'
@@ -31,7 +36,8 @@ stages:
             action: 'Create Or Update Resource Group'
             resourceGroupName: 'demo'
             location: 'eastus'
-            csmFile: '$(build.stagingdirectory)/azuredeploy.json'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(Build.stagingdirectory)/azuredeploy.json'
             deploymentMode: 'Incremental'
   - stage: ci
     displayName: CI
