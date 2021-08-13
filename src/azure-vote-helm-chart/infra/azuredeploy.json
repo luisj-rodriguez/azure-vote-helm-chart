@@ -77,7 +77,6 @@
       "name": "[parameters('clusterName')]",
       "location": "[parameters('location')]",
       "properties": {
-        "dnsPrefix": "[parameters('dnsPrefix')]",
         "agentPoolProfiles": [
           {
             "name": "agentpool",
