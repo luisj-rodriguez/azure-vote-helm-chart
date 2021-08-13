@@ -23,11 +23,6 @@ stages:
       - job: setup_aks
         displayName: aks
         steps:
-        - task: CopyFiles@2
-          inputs:
-            SourceFolder: 'infra/'
-            Contents: '**'
-            TargetFolder: '$(Build.ArtifactStagingDirectory)'
         - task: AzureResourceManagerTemplateDeployment@3
           inputs:
             deploymentScope: 'Resource Group'
@@ -37,7 +32,7 @@ stages:
             resourceGroupName: 'demo'
             location: 'eastus'
             templateLocation: 'Linked artifact'
-            csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
+            csmFile: '$(Build.stagingdirectory)/azuredeploy.json'
             deploymentMode: 'Incremental'
   - stage: ci
     displayName: CI
