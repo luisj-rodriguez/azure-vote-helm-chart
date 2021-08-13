@@ -25,7 +25,7 @@ stages:
         steps:
         - task: CopyFiles@2
           inputs:
-            SourceFolder: 'src/azure-vote-helm-chart/infra/'
+            SourceFolder: 'infra/'
             Contents: '**'
             TargetFolder: '$(Build.ArtifactStagingDirectory)'
         - task: AzureResourceManagerTemplateDeployment@3
