@@ -38,6 +38,7 @@ stages:
             location: 'eastus'
             templateLocation: 'Linked artifact'
             csmFile: '$(Build.stagingdirectory)/azuredeploy.json'
+            csmParametersFile: '$(Build.ArtifactStagingDirectory)/parameters.json'
             deploymentMode: 'Incremental'
   - stage: ci
     displayName: CI
@@ -108,7 +109,7 @@ stages:
                 inputs:
                   connectionType: 'Azure Resource Manager'
                   azureSubscription: 'azure'
-                  azureResourceGroup: 'demos'
+                  azureResourceGroup: 'demo'
                   kubernetesCluster: 'aksdemoutkarsh'
                   namespace: 'dev'
                   command: 'upgrade'
@@ -155,7 +156,7 @@ stages:
                 inputs:
                   connectionType: 'Azure Resource Manager'
                   azureSubscription: 'azure'
-                  azureResourceGroup: 'demos'
+                  azureResourceGroup: 'demo'
                   kubernetesCluster: 'aksdemoutkarsh'
                   namespace: 'qa'
                   command: 'upgrade'
